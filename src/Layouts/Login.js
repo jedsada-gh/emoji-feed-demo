@@ -8,7 +8,7 @@ class Login extends Component {
     componentWillMount() {
         auth.onAuthStateChanged((user) => {
             if (user) {
-                // this.props.history.replace("/feed")
+                this.props.history.replace("/feed")
             }
             this.setState({ user })
         })
