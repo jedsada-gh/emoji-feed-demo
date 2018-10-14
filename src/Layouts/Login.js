@@ -1,30 +1,27 @@
 import React, { Component } from 'react'
 import '../App.css'
-import { auth, provider } from '../firebaseApp'
-import { FacebookLoginButton } from "react-social-login-buttons";
+import { auth, provider } from '../firebase'
 
 class Login extends Component {
-
-    componentWillMount() {
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                this.props.history.replace("/feed")
-            }
-            this.setState({ user })
-        })
-    }
 
     state = {
         user: null
     }
-    
-    login = () => {
-        auth.signInWithPopup(provider).then(({ user }) => {
+
+    componentWillMount() {
+        auth.onAuthStateChanged((user) => {
             this.setState({ user })
         })
     }
     
-    logout = () => {
+    loginFacebook = () => {
+        auth.signInWithPopup(provider).then(({ user }) => {
+            this.setState({ user })
+            this.props.history.replace("/feed")
+        })
+    }
+    
+    logoutFacebook = () => {
         auth.signOut().then(() => {
             this.setState({ user: null }) 
         })
@@ -35,7 +32,10 @@ class Login extends Component {
         return ( 
             <div className="App">
                 <p>{user ? `Hi, ${user.displayName}!` : 'Hi!'}</p>
-                <FacebookLoginButton onClick={this.login} />
+                <button class="ui facebook button" onClick={this.loginFacebook}>
+                    <i class="facebook icon"></i>
+                    Sign up with Facebook
+                </button>
             </div>
         )
     }
