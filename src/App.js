@@ -9,16 +9,18 @@ class App extends Component {
 
   render() {
     return (
-      <Container>
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css"/>
-        <Router>
+      <Router>
           <Fragment>
-            <Route exact path="/" component={Login} />
-            <Route path="/feed" component={Feed} />
+            <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css"/>
+            <Container>
+              <Route exact path="/" component={Login} />
+            </Container>
+            <Container>
+              <Route path="/feed" component={Feed} />
+            </Container>
             <Route path="/monitor" component={Monitor} />
           </Fragment>
         </Router>
-      </Container>
     )
   }
 }
