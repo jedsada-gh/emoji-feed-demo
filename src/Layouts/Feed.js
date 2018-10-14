@@ -55,9 +55,11 @@ class Feed extends Component {
         return (
             <div class="ui feed" style={{ marginTop: '16px', marginBottom: '16px' }}>
                 <ListFeed items={this.state.messages}/>
-                <button class="ui pink button" onClick={this.randomEmotion}>
-                    <i class="heart icon"></i> Give Happiness
-                </button>
+                <div style={{ textAlign:'center' }}>
+                    <button class="ui pink button" onClick={this.randomEmotion}>
+                        <i class="heart icon"></i> Give Happiness
+                    </button>
+                </div>
             </div>
         )
     }

@@ -7,7 +7,7 @@ function ItemFeed(props) {
         <div>
             <Feed.Event>
                 <div class="label">
-                    <img class="ui avatar image" src={item.image_profile}/>
+                    <img style={{ width:'35px', height: '35px' }} class="ui avatar image" src={item.image_profile}/>
                 </div>
                 <Feed.Content>
                     <Feed.Summary><a>{item.displayName}</a></Feed.Summary>
