@@ -3,6 +3,7 @@ import ListFeed from '../components/ListFeed'
 import { database, auth } from '../firebase'
 import randomWords  from 'random-words'
 import randomEmoji from '../randomEmoji'
+import { Button } from 'semantic-ui-react'
 import _ from 'lodash'
 
 class Feed extends Component {
@@ -10,7 +11,9 @@ class Feed extends Component {
     state = {
         newItem: false,
         user: null,
-        messages : []
+        messages : [],
+        isLoading: false,
+        isClickAble: true,
     }
 
     componentWillMount() {
@@ -43,11 +46,18 @@ class Feed extends Component {
     }
 
     randomEmotion = () => {
+        if (!this.state.isClickAble) return
+        this.setState({ isLoading: true })
         database.ref('/messages').push({
             message: randomWords(),
             emoji: randomEmoji(),
             image_profile: `${this.state.user.photoURL}?height=500`,
             displayName: this.state.user.displayName
+        }).then(() => {
+            this.setState({ isLoading: false, isClickAble: false })
+            setTimeout(() => {
+                this.setState({ isClickAble: true })
+            }, 10000)
         })
     }
 
@@ -56,9 +66,12 @@ class Feed extends Component {
             <div class="ui feed" style={{ marginTop: '16px', marginBottom: '16px' }}>
                 <ListFeed items={this.state.messages}/>
                 <div style={{ textAlign:'center' }}>
-                    <button class="ui pink button" onClick={this.randomEmotion}>
-                        <i class="heart icon"></i> Give Happiness
-                    </button>
+                    <Button color='pink' 
+                        loading={this.state.isLoading} 
+                        disabled={!this.state.isClickAble}
+                        onClick={this.randomEmotion}>
+                            <i class="heart icon"></i> Give Happiness
+                    </Button>
                 </div>
             </div>
         )
